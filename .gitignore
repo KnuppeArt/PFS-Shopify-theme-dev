@@ -1,0 +1,153 @@
+# =====================================================
+# .gitignore para tu proyecto Shopify local
+# Solo versiona TUS archivos custom, ignora Dawn base
+# =====================================================
+
+# ============================================
+# SHOPIFY DEVELOPMENT FILES
+# ============================================
+.shopify/
+shopify.theme.toml
+
+# ============================================
+# DAWN THEME BASE ASSETS (IGNORAR)
+# ============================================
+
+# Dawn CSS base files
+assets/base.css
+assets/component-*.css
+assets/section-*.css
+assets/template-*.css
+assets/customer.css
+assets/gift-card.css
+
+# Dawn JS base files  
+assets/global.js
+assets/details-*.js
+assets/localization-form.js
+assets/predictive-search.js
+assets/product-*.js
+assets/cart-*.js
+assets/pickup-*.js
+
+# Dawn images base
+assets/favicon.png
+
+# ============================================
+# DAWN SECTIONS BASE (IGNORAR)
+# ============================================
+
+# Header/Footer base
+sections/header.liquid
+sections/footer.liquid
+
+# Product sections base
+sections/product-*.liquid
+sections/featured-product.liquid
+
+# Collection sections base
+sections/collection-*.liquid
+sections/featured-collection.liquid
+
+# Cart/Checkout sections base
+sections/cart-*.liquid
+
+# General sections base
+sections/announcement-bar.liquid
+sections/apps.liquid
+sections/blog-posts.liquid
+sections/contact-form.liquid
+sections/custom-liquid.liquid
+sections/email-signup-banner.liquid
+sections/featured-blog.liquid
+sections/image-*.liquid
+sections/main-*.liquid
+sections/multicolumn.liquid
+sections/newsletter.liquid
+sections/page.liquid
+sections/rich-text.liquid
+sections/slideshow.liquid
+sections/video.liquid
+
+# ============================================
+# DAWN TEMPLATES BASE (IGNORAR)
+# ============================================
+templates/404.json
+templates/article.json
+templates/blog.json
+templates/cart.json
+templates/collection.json
+templates/customers/
+templates/gift_card.liquid
+templates/list-collections.json
+templates/page.contact.json
+templates/page.json
+templates/password.json
+templates/product.json
+templates/search.json
+
+# Solo permitir index.json SI lo modificas
+# templates/index.json  # Descomenta si NO modificas homepage
+
+# ============================================
+# DAWN CONFIG BASE (IGNORAR)
+# ============================================
+config/settings_data.json
+locales/en.default.json
+
+# ============================================
+# LAYOUT BASE (IGNORAR UNLESS MODIFIED)
+# ============================================
+layout/checkout.liquid
+layout/customer.liquid
+layout/gift_card.liquid
+layout/password.liquid
+# layout/theme.liquid
+
+# ============================================
+# SNIPPETS BASE (IGNORAR UNLESS MODIFIED)  
+# ============================================
+snippets/buy-buttons.liquid
+snippets/card-*.liquid
+snippets/icon-*.liquid
+snippets/loading-*.liquid
+snippets/price.liquid
+snippets/product-*.liquid
+
+# ============================================
+# FORZAR INCLUIR TUS ARCHIVOS CUSTOM
+# ============================================
+
+# Tus secciones custom (WHITELIST)
+!sections/hero-integrated-PFS.liquid
+!sections/categories-PFS.liquid
+!sections/our-best-seller.liquid
+!sections/custom-*.liquid
+!sections/*PFS*.liquid
+
+# Tus assets custom (WHITELIST) 
+!assets/custom-*.css
+!assets/custom-*.js
+!assets/*PFS*.css
+!assets/*PFS*.js
+!assets/hero-*.css
+!assets/categories-*.css
+
+# Tus templates modificados (WHITELIST)
+!templates/index.json
+
+# ============================================
+# SISTEMA OPERATIVO
+# ============================================
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+
+# ============================================
+# NODE.JS Y BUILD TOOLS
+# ============================================
+node_modules/
+package-lock.json
+dist/
+build/
