@@ -1,0 +1,28 @@
+# Screenshots Directory
+
+## Purpose
+Visual progress tracking for PFS Shopify theme development.
+
+## Naming Convention
+```
+section-name-device-state.png
+
+Examples:
+hero-integrated-desktop-final.png
+hero-integrated-mobile-responsive.png
+categories-section-tablet-hover.png
+our-best-seller-mobile-progress.png
+homepage-full-desktop-complete.png
+```
+
+## Categories
+- **Desktop:** 1920px, 1366px, 1024px screenshots
+- **Tablet:** 768px screenshots  
+- **Mobile:** 480px, 375px screenshots
+- **States:** normal, hover, loading, error
+- **Progress:** wireframe, development, final
+
+## Tools
+- Browser dev tools for responsive screenshots
+- Full page screenshots for homepage views
+- Before/after comparisons for optimizations
