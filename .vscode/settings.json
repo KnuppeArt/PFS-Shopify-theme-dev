@@ -1,0 +1,36 @@
+{
+  "liquid.format.enable": true,
+  "shopifyLiquid.snippetFormat": "tabstop",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.wordWrap": "on",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "files.associations": {
+    "*.liquid": "liquid"
+  },
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "emmet.includeLanguages": {
+    "liquid": "html"
+  },
+  "github.copilot.enable": {
+    "*": true,
+    "liquid": true,
+    "html": true,
+    "css": true,
+    "javascript": true
+  },
+  "workbench.colorTheme": "Default Dark Modern",
+  "explorer.confirmDelete": true,
+  "git.autofetch": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.shopify": true,
+    "**/dist": true
+  },
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true
+  }
+}
