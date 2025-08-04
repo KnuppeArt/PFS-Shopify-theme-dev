@@ -1,0 +1,20 @@
+{
+  "recommendations": [
+    "sissel.shopify-liquid",
+    "github.copilot",
+    "github.copilot-chat",
+    "shopify.theme-check-vscode",
+    "ms-vscode.vscode-json",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.path-intellisense",
+    "esbenp.prettier-vscode",
+    "eamodio.gitlens",
+    "pkief.material-icon-theme",
+    "wayou.vscode-todo-highlight",
+    "gruntfuggly.todo-tree"
+  ],
+  "unwantedRecommendations": [
+    "ms-vscode.vscode-typescript",
+    "hookyqr.beautify"
+  ]
+}

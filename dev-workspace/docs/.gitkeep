@@ -1,0 +1,30 @@
+# Documentation Directory
+
+## Purpose
+Technical documentation for PFS Shopify theme development.
+
+## Document Types
+
+### Technical Docs
+- **ai-prompts-used.md** - AI prompts and workflows
+- **debugging-notes.md** - Bug fixes and solutions
+- **performance-notes.md** - Optimization techniques
+- **browser-testing.md** - Cross-browser compatibility
+
+### Design Docs
+- **design-decisions.md** - UI/UX decisions and rationale
+- **color-palette.md** - Color scheme documentation
+- **typography.md** - Font choices and hierarchy
+- **responsive-breakpoints.md** - Breakpoint strategy
+
+### Development Docs
+- **code-standards.md** - Coding conventions
+- **git-workflow.md** - Git best practices
+- **deployment-process.md** - Deploy procedures
+- **troubleshooting.md** - Common issues and fixes
+
+### Learning Docs
+- **lessons-learned.md** - Key insights from development
+- **shopify-tips.md** - Shopify-specific knowledge
+- **performance-tips.md** - Performance optimization learnings
+- **accessibility-notes.md** - Accessibility implementation notes

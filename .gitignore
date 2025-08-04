@@ -1,5 +1,5 @@
 # =====================================================
-# .gitignore para tu proyecto Shopify local
+# PFS-Shopify-theme-dev - Smart .gitignore
 # Solo versiona TUS archivos custom, ignora Dawn base
 # =====================================================
 
@@ -8,6 +8,7 @@
 # ============================================
 .shopify/
 shopify.theme.toml
+.shopifyignore
 
 # ============================================
 # DAWN THEME BASE ASSETS (IGNORAR)
@@ -21,7 +22,7 @@ assets/template-*.css
 assets/customer.css
 assets/gift-card.css
 
-# Dawn JS base files  
+# Dawn JS base files
 assets/global.js
 assets/details-*.js
 assets/localization-form.js
@@ -32,6 +33,7 @@ assets/pickup-*.js
 
 # Dawn images base
 assets/favicon.png
+assets/logo.png
 
 # ============================================
 # DAWN SECTIONS BASE (IGNORAR)
@@ -92,8 +94,9 @@ templates/search.json
 # ============================================
 # DAWN CONFIG BASE (IGNORAR)
 # ============================================
-config/settings_data.json
-locales/en.default.json
+config/settings_data.json    # Configuración específica de store
+locales/en.default.json       # Solo si no modificas traducciones
+locales/es.json              # Solo si no añades traducciones custom
 
 # ============================================
 # LAYOUT BASE (IGNORAR UNLESS MODIFIED)
@@ -102,10 +105,10 @@ layout/checkout.liquid
 layout/customer.liquid
 layout/gift_card.liquid
 layout/password.liquid
-# layout/theme.liquid
+# layout/theme.liquid         # Descomenta si NO modificas layout principal
 
 # ============================================
-# SNIPPETS BASE (IGNORAR UNLESS MODIFIED)  
+# SNIPPETS BASE (IGNORAR UNLESS MODIFIED)
 # ============================================
 snippets/buy-buttons.liquid
 snippets/card-*.liquid
@@ -113,6 +116,8 @@ snippets/icon-*.liquid
 snippets/loading-*.liquid
 snippets/price.liquid
 snippets/product-*.liquid
+snippets/quantity-*.liquid
+snippets/social-*.liquid
 
 # ============================================
 # FORZAR INCLUIR TUS ARCHIVOS CUSTOM
@@ -124,30 +129,139 @@ snippets/product-*.liquid
 !sections/our-best-seller.liquid
 !sections/custom-*.liquid
 !sections/*PFS*.liquid
+!sections/pfs-*.liquid
 
-# Tus assets custom (WHITELIST) 
+# Tus assets custom (WHITELIST)
 !assets/custom-*.css
 !assets/custom-*.js
 !assets/*PFS*.css
 !assets/*PFS*.js
+!assets/pfs-*.css
+!assets/pfs-*.js
 !assets/hero-*.css
 !assets/categories-*.css
+!assets/products-*.css
 
 # Tus templates modificados (WHITELIST)
-!templates/index.json
+!templates/index.json        # SI modificas homepage
+!templates/custom-*.json
+!templates/*PFS*.json
+!templates/pfs-*.json
+
+# Tu workspace development (SIEMPRE INCLUIR)
+!dev-workspace/
+!dev-workspace/**/*
+
+# Documentación del proyecto (SIEMPRE INCLUIR)
+!README.md
+!CHANGELOG.md
+!LICENSE
 
 # ============================================
 # SISTEMA OPERATIVO
 # ============================================
+
+# macOS
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
-*.tmp
-*.log
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ============================================
+# EDITORES E IDEs
+# ============================================
+
+# VS Code workspace específico (opcional)
+.vscode/settings.json        # Descomenta si quieres incluir tu config
+.vscode/launch.json
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
 
 # ============================================
 # NODE.JS Y BUILD TOOLS
 # ============================================
+
+# Dependencies
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 package-lock.json
+yarn.lock
+
+# Build directories
 dist/
 build/
+.tmp/
+
+# ============================================
+# LOGS Y TEMPORALES
+# ============================================
+
+# Log files
+*.log
+logs/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage/
+.nyc_output/
+
+# ============================================
+# ARCHIVOS TEMPORALES
+# ============================================
+
+# Backup files
+*.backup
+*.bak
+*.orig
+*.swp
+*.swo
+
+# Archive files
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+# ============================================
+# NOTAS IMPORTANTES
+# ============================================
+
+# Este .gitignore está diseñado para:
+# 1. Ignorar TODA la base Dawn theme
+# 2. Permitir SOLO tus archivos custom específicos
+# 3. Mantener estructura idéntica a Shopify
+# 4. Versionar tu dev-workspace completo
+# 5. Fácil maintenance y escalabilidad
+
+# Para añadir nuevos archivos custom:
+# 1. Añade línea !archivo-custom.liquid
+# 2. O úsalos con prefijos: custom-*, pfs-*, *PFS*
+# 3. Siempre testea con: git status
