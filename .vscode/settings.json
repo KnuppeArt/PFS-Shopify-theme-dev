@@ -21,7 +21,7 @@
     "css": true,
     "javascript": true
   },
-  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.colorTheme": "GitHub Dark",
   "explorer.confirmDelete": true,
   "git.autofetch": true,
   "search.exclude": {
