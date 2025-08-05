@@ -242,6 +242,10 @@ body.template-index .shopify-section-group-header-group {
   top: 0 !important;
 }
 
+/* ============================================
+   🔧 Z-INDEX HIERARCHY FIXED - CRITICAL FIX
+   ============================================ */
+
 /* Hero Integrated Styles with Full Customization */
 .hero-integrated {
   position: relative;
@@ -265,6 +269,7 @@ body.template-index .shopify-section-group-header-group {
   z-index: 1;
 }
 
+/* 🔧 CRITICAL FIX: Overlay Sólido - Z-index bajado a 1 */
 .hero-bg-overlay {
   position: absolute !important;
   top: 0 !important;
@@ -273,7 +278,7 @@ body.template-index .shopify-section-group-header-group {
   bottom: 0 !important;
   width: 100% !important;
   height: 100% !important;
-  z-index: 2 !important;
+  z-index: 1 !important; /* 🔧 CHANGED FROM 2 TO 1 */
   pointer-events: none !important;
   display: block !important;
 
@@ -282,11 +287,11 @@ body.template-index .shopify-section-group-header-group {
   opacity: {{ section.settings.bg_overlay_opacity | divided_by: 100.0 }} !important;
 }
 
-/* Overlay Gradient System */
+/* 🔧 CRITICAL FIX: Overlay Gradient - Z-index también bajado a 1 */
 .hero-bg-overlay[data-overlay-type="gradient"] {
   opacity: 1 !important;
   background: none !important;
-  z-index: 2 !important;
+  z-index: 1 !important; /* 🔧 CHANGED FROM 2 TO 1 */
 }
 
 /* Gradiente Vertical - Arriba a Abajo */
@@ -365,7 +370,7 @@ body.template-index .shopify-section-group-header-group {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 100; /* SAFE: Above overlays (z:1) but below sticky (z:1000) */
   padding: 1rem 0;
   background: transparent;
   backdrop-filter: none;
@@ -486,7 +491,7 @@ body.template-index .shopify-section-group-header-group {
   align-items: center;
   flex: 1;
   position: relative;
-  z-index: 3;
+  z-index: 3; /* SAFE: Above overlays and nav */
 }
 
 .hero-container {
@@ -622,7 +627,7 @@ body.template-index .shopify-section-group-header-group {
   50% { transform: translateY(-20px); }
 }
 
-/* Sticky Navigation with Glassmorphism */
+/* 🔧 CRITICAL: Sticky Navigation with Glassmorphism - MAXIMUM Z-INDEX */
 .hero-nav.scrolled {
   position: fixed;
   top: 0;
@@ -634,7 +639,7 @@ body.template-index .shopify-section-group-header-group {
   padding: 0.75rem 0;
   animation: slideDown 0.3s ease;
   border-radius: 0;
-  z-index: 1000;
+  z-index: 1000; /* 🔧 MAXIMUM PRIORITY - Above everything */
 }
 
 /* Glassmorphism effect enhancements */
@@ -688,7 +693,7 @@ body.template-index .shopify-section-group-header-group {
   right: 0;
   bottom: 0;
   background: rgba(0,0,0,0.8);
-  z-index: 9999;
+  z-index: 9999; /* ABOVE EVERYTHING */
   display: none;
 }
 
