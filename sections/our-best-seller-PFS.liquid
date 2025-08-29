@@ -1,0 +1,1212 @@
+<!-- sections/our-best-seller-PFS.liquid -->
+<div class="best-seller-section" 
+     id="best-seller-{{ section.id }}"
+     style="
+       --section-bg: {{ section.settings.section_bg | default: '#f8f6f0' }};
+       --section-padding-y: {{ section.settings.section_padding_y | default: 80 }}px;
+       --section-padding-x: {{ section.settings.section_padding_x | default: 40 }}px;
+       --container-max-width: {{ section.settings.container_max_width | default: 1400 }}px;
+       --primary-color: {{ section.settings.primary_color | default: '#8b4513' }};
+       --text-color: {{ section.settings.text_color | default: '#2c3e37' }};
+       --subtitle-color: {{ section.settings.subtitle_color | default: '#8b4513' }};
+       --description-color: {{ section.settings.description_color | default: '#5a6c57' }};
+       --card-bg: {{ section.settings.card_bg_color | default: '#ffffff' }};
+       --card-hover-bg: {{ section.settings.card_hover_bg | default: '#ffffff' }};
+       --card-shadow: {{ section.settings.card_shadow_opacity | default: 10 }}%;
+       --card-hover-shadow: {{ section.settings.card_hover_shadow_opacity | default: 25 }}%;
+       --card-radius: {{ section.settings.card_border_radius | default: 16 }}px;
+       --grid-gap: {{ section.settings.grid_gap | default: 30 }}px;
+       --price-color: {{ section.settings.price_color | default: '#8b4513' }};
+       --old-price-color: {{ section.settings.old_price_color | default: '#999999' }};
+       --badge-bg: {{ section.settings.badge_bg_color | default: '#e8f5e8' }};
+       --badge-text: {{ section.settings.badge_text_color | default: '#2d5016' }};
+       --button-bg: {{ section.settings.button_bg_color | default: '#8b4513' }};
+       --button-text: {{ section.settings.button_text_color | default: '#ffffff' }};
+       --button-hover-bg: {{ section.settings.button_hover_bg | default: '#724113' }};
+       --benefit-icon-color: {{ section.settings.benefit_icon_color | default: '#8b4513' }};
+     ">
+
+  <div class="best-seller-container">
+    
+    <!-- Section Header -->
+    <div class="best-seller-header">
+      {% if section.settings.subtitle != blank %}
+        <p class="best-seller-subtitle"
+           style="font-size: {{ section.settings.subtitle_size }}px;
+                  font-weight: {{ section.settings.subtitle_weight }};
+                  text-transform: {{ section.settings.subtitle_transform }};">
+          {{ section.settings.subtitle }}
+        </p>
+      {% endif %}
+      
+      {% if section.settings.title != blank %}
+        <h2 class="best-seller-title"
+            style="font-size: {{ section.settings.title_size }}px;
+                   font-weight: {{ section.settings.title_weight }};
+                   line-height: {{ section.settings.title_line_height }};">
+          {{ section.settings.title }}
+        </h2>
+      {% endif %}
+      
+      {% if section.settings.description != blank %}
+        <p class="best-seller-description"
+           style="font-size: {{ section.settings.description_size }}px;
+                  line-height: {{ section.settings.description_line_height }};">
+          {{ section.settings.description }}
+        </p>
+      {% endif %}
+    </div>
+
+    <!-- Products Grid -->
+    <div class="best-seller-grid"
+         style="grid-template-columns: repeat({{ section.settings.desktop_columns }}, 1fr);
+                grid-gap: var(--grid-gap);">
+      
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'product_card' %}
+            {% assign product = collections[block.settings.collection].products[block.settings.product_handle] | default: block.settings.manual_product %}
+            
+            <div class="product-card {% if block.settings.featured %}product-card--featured{% endif %}"
+                 data-block-id="{{ block.id }}">
+              
+              <!-- Product Badge -->
+              {% if block.settings.show_badge and block.settings.badge_text != blank %}
+                <div class="product-badge">
+                  {{ block.settings.badge_text }}
+                </div>
+              {% endif %}
+              
+              <!-- Product Image -->
+              <div class="product-image">
+                {% if product.featured_image != blank %}
+                  <img src="{{ product.featured_image | image_url: width: 400 }}"
+                       alt="{{ product.title }}"
+                       loading="lazy"
+                       width="400" 
+                       height="300">
+                {% elsif block.settings.manual_image != blank %}
+                  <img src="{{ block.settings.manual_image | image_url: width: 400 }}"
+                       alt="{{ block.settings.manual_title }}"
+                       loading="lazy"
+                       width="400" 
+                       height="300">
+                {% else %}
+                  <div class="product-image-placeholder">
+                    <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                      <rect width="60" height="60" rx="8" fill="#f3f4f6"/>
+                      <path d="M25 22.5L35 22.5M20 30L40 30M25 37.5L35 37.5" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                {% endif %}
+                
+                <!-- Hover Overlay -->
+                {% if section.settings.show_hover_overlay %}
+                <div class="product-hover-overlay">
+                  <div class="hover-actions">
+                    {% if section.settings.show_quick_view %}
+                    <button class="hover-action quick-view" aria-label="Vista rápida">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M1 10C1 10 4 4 10 4C16 4 19 10 19 10C19 10 16 16 10 16C4 16 1 10 1 10Z" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    </button>
+                    {% endif %}
+                    
+                    {% if section.settings.show_wishlist %}
+                    <button class="hover-action wishlist" aria-label="Añadir a wishlist">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M3.5 8.5C3.5 5.5 6 3.5 9 5.5C10 4.5 13.5 3 16.5 6C19.5 9 16.5 13.5 10 18C3.5 13.5 0.5 9 3.5 8.5Z" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    </button>
+                    {% endif %}
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+              
+              <!-- Product Content -->
+              <div class="product-content">
+                
+                <!-- Product Title -->
+                <h3 class="product-title">
+                  {% if product.title != blank %}
+                    {{ product.title }}
+                  {% else %}
+                    {{ block.settings.manual_title | default: 'Producto Premium' }}
+                  {% endif %}
+                </h3>
+                
+                <!-- Health Benefits -->
+                {% if section.settings.show_benefits %}
+                <div class="product-benefits">
+                  {% for i in (1..3) %}
+                    {% assign benefit_key = 'benefit_' | append: i %}
+                    {% if block.settings[benefit_key] != blank %}
+                      <span class="benefit-item">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                          <path d="M12 4L5.5 10L2 6.5" stroke="var(--benefit-icon-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        {{ block.settings[benefit_key] }}
+                      </span>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                {% endif %}
+                
+                <!-- Nutrition Info -->
+                {% if section.settings.show_nutrition and block.settings.nutrition_info != blank %}
+                <div class="nutrition-info" title="{{ block.settings.nutrition_info }}">
+                  <span class="nutrition-trigger">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="2"/>
+                      <path d="M8 12V8M8 4H8.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Info Nutricional
+                  </span>
+                  <div class="nutrition-tooltip">
+                    {{ block.settings.nutrition_info }}
+                  </div>
+                </div>
+                {% endif %}
+                
+                <!-- Product Price -->
+                <div class="product-pricing">
+                  {% if product.price != blank %}
+                    {% if product.compare_at_price > product.price %}
+                      <span class="price-old">{{ product.compare_at_price | money }}</span>
+                    {% endif %}
+                    <span class="price-current">{{ product.price | money }}</span>
+                    {% if product.compare_at_price > product.price %}
+                      {% assign discount = product.compare_at_price | minus: product.price %}
+                      {% assign discount_percent = discount | times: 100 | divided_by: product.compare_at_price %}
+                      <span class="price-discount">-{{ discount_percent }}%</span>
+                    {% endif %}
+                  {% else %}
+                    <span class="price-current">{{ block.settings.manual_price | default: '€12.99' }}</span>
+                  {% endif %}
+                </div>
+                
+                <!-- Add to Cart Button -->
+                <div class="product-actions">
+                  {% if section.settings.show_add_to_cart %}
+                    {% if product.id != blank %}
+                      <form action="/cart/add" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                        <button type="submit" 
+                                class="add-to-cart-btn"
+                                style="border-radius: {{ section.settings.button_border_radius }}px;
+                                       font-size: {{ section.settings.button_font_size }}px;">
+                          {% if section.settings.button_icon %}
+                          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path d="M6 1L3 4V16C3 16.5304 3.21071 17.0391 3.58579 17.4142C3.96086 17.7893 4.46957 18 5 18H13C13.5304 18 14.0391 17.7893 14.4142 17.4142C14.7893 17.0391 15 16.5304 15 16V4L12 1H6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="3,4 6,4 12,4 15,4" stroke="currentColor" stroke-width="2"/>
+                          </svg>
+                          {% endif %}
+                          {{ section.settings.button_text | default: 'Añadir al carrito' }}
+                        </button>
+                      </form>
+                    {% else %}
+                      <button class="add-to-cart-btn"
+                              style="border-radius: {{ section.settings.button_border_radius }}px;
+                                     font-size: {{ section.settings.button_font_size }}px;">
+                        {{ section.settings.button_text | default: 'Añadir al carrito' }}
+                      </button>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+    
+    <!-- Section CTA -->
+    {% if section.settings.show_section_cta and section.settings.section_cta_text != blank %}
+    <div class="section-cta">
+      <a href="{{ section.settings.section_cta_url | default: '/collections/all' }}" 
+         class="section-cta-button"
+         style="border-radius: {{ section.settings.section_cta_radius }}px;
+                font-size: {{ section.settings.section_cta_font_size }}px;">
+        {{ section.settings.section_cta_text }}
+        {% if section.settings.section_cta_arrow %}
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {% endif %}
+      </a>
+    </div>
+    {% endif %}
+    
+  </div>
+</div>
+
+<style>
+/* Our Best Seller Section */
+.best-seller-section {
+  background: var(--section-bg);
+  padding: var(--section-padding-y) var(--section-padding-x);
+  position: relative;
+  z-index: 1;
+}
+
+.best-seller-container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Section Header */
+.best-seller-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.best-seller-subtitle {
+  color: var(--subtitle-color);
+  margin: 0 0 1rem 0;
+  letter-spacing: 0.5px;
+}
+
+.best-seller-title {
+  color: var(--text-color);
+  margin: 0 0 1.5rem 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.best-seller-description {
+  color: var(--description-color);
+  margin: 0;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Products Grid */
+.best-seller-grid {
+  display: grid;
+  margin-bottom: 3rem;
+}
+
+/* Product Card */
+.product-card {
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, var(--card-shadow));
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, var(--card-hover-shadow));
+  background: var(--card-hover-bg);
+}
+
+.product-card--featured {
+  position: relative;
+}
+
+.product-card--featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), #d2691e);
+  z-index: 10;
+}
+
+/* Product Badge */
+.product-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: var(--badge-bg);
+  color: var(--badge-text);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 5;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Product Image */
+.product-image {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+.product-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+}
+
+/* Hover Overlay */
+.product-hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.product-card:hover .product-hover-overlay {
+  opacity: 1;
+}
+
+.hover-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.hover-action {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--text-color);
+}
+
+.hover-action:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+/* Product Content */
+.product-content {
+  padding: 1.5rem;
+}
+
+.product-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0 0 1rem 0;
+  line-height: 1.4;
+}
+
+/* Health Benefits */
+.product-benefits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--description-color);
+  background: rgba(139, 69, 19, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+}
+
+/* Nutrition Info */
+.nutrition-info {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.nutrition-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--primary-color);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.nutrition-tooltip {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--text-color);
+  color: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  width: 200px;
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nutrition-info:hover .nutrition-tooltip {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Product Pricing */
+.product-pricing {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.price-current {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--price-color);
+}
+
+.price-old {
+  font-size: 1rem;
+  color: var(--old-price-color);
+  text-decoration: line-through;
+}
+
+.price-discount {
+  background: #dc3545;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Add to Cart Button */
+.add-to-cart-btn {
+  width: 100%;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 0.875rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.add-to-cart-btn:hover {
+  background: var(--button-hover-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Section CTA */
+.section-cta {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.section-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  padding: 1rem 2rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.section-cta-button:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .best-seller-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .best-seller-section {
+    padding: 3rem 1.5rem;
+  }
+  
+  .best-seller-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+  }
+  
+  .best-seller-header {
+    margin-bottom: 2.5rem;
+  }
+  
+  .product-image {
+    height: 200px;
+  }
+  
+  .hover-actions {
+    gap: 0.75rem;
+  }
+  
+  .hover-action {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .nutrition-tooltip {
+    width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .best-seller-section {
+    padding: 2rem 1rem;
+  }
+  
+  .product-content {
+    padding: 1rem;
+  }
+  
+  .product-benefits {
+    gap: 0.5rem;
+  }
+  
+  .benefit-item {
+    font-size: 0.6875rem;
+  }
+}
+
+/* Accessibility & Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .product-card,
+  .product-image img,
+  .product-hover-overlay,
+  .hover-action,
+  .add-to-cart-btn,
+  .section-cta-button {
+    transition: none;
+  }
+  
+  .product-card:hover {
+    transform: none;
+  }
+  
+  .product-card:hover .product-image img {
+    transform: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .product-card {
+    border: 2px solid var(--text-color);
+  }
+  
+  .benefit-item {
+    border: 1px solid var(--primary-color);
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Our Best Seller",
+  "settings": [
+    {
+      "type": "header",
+      "content": "🎨 Diseño General"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Color de fondo sección",
+      "default": "#f8f6f0"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_y",
+      "label": "Padding vertical (px)",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "section_padding_x",
+      "label": "Padding horizontal (px)",
+      "min": 20,
+      "max": 80,
+      "step": 10,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "label": "Ancho máximo contenedor (px)",
+      "min": 1200,
+      "max": 1600,
+      "step": 50,
+      "default": 1400
+    },
+    {
+      "type": "header",
+      "content": "📝 Contenido Sección"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "PRODUCTOS ESTRELLA"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Tamaño subtítulo (px)",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "subtitle_weight",
+      "label": "Peso subtítulo",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_transform",
+      "label": "Transformación subtítulo",
+      "options": [
+        { "value": "none", "label": "Normal" },
+        { "value": "uppercase", "label": "Mayúsculas" },
+        { "value": "lowercase", "label": "Minúsculas" },
+        { "value": "capitalize", "label": "Primera Mayúscula" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título principal",
+      "default": "Nuestros Productos Más Vendidos"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamaño título (px)",
+      "min": 24,
+      "max": 48,
+      "step": 2,
+      "default": 36
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Peso título",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "label": "Altura línea título",
+      "min": 1.0,
+      "max": 1.6,
+      "step": 0.1,
+      "default": 1.2
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción",
+      "default": "Descubre los productos que más aman nuestros clientes, seleccionados por su calidad excepcional y beneficios nutricionales únicos."
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Tamaño descripción (px)",
+      "min": 14,
+      "max": 22,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "description_line_height",
+      "label": "Altura línea descripción",
+      "min": 1.2,
+      "max": 2.0,
+      "step": 0.1,
+      "default": 1.5
+    },
+    {
+      "type": "header",
+      "content": "🏷️ Grid Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "label": "Columnas desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Espacio entre tarjetas (px)",
+      "min": 15,
+      "max": 60,
+      "step": 5,
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "🎨 Colores"
+    },
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Color primario",
+      "default": "#8b4513"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color texto principal",
+      "default": "#2c3e37"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Color subtítulo",
+      "default": "#8b4513"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Color descripción",
+      "default": "#5a6c57"
+    },
+    {
+      "type": "color",
+      "id": "benefit_icon_color",
+      "label": "Color iconos beneficios",
+      "default": "#8b4513"
+    },
+    {
+      "type": "header",
+      "content": "🃏 Tarjetas Producto"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Color fondo tarjeta",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_hover_bg",
+      "label": "Color fondo tarjeta hover",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Border radius tarjetas (px)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_shadow_opacity",
+      "label": "Opacidad sombra normal (%)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "card_hover_shadow_opacity",
+      "label": "Opacidad sombra hover (%)",
+      "min": 10,
+      "max": 50,
+      "step": 2,
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "🏷️ Precios"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Color precio actual",
+      "default": "#8b4513"
+    },
+    {
+      "type": "color",
+      "id": "old_price_color",
+      "label": "Color precio anterior",
+      "default": "#999999"
+    },
+    {
+      "type": "header",
+      "content": "🏆 Badges"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Color fondo badge",
+      "default": "#e8f5e8"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Color texto badge",
+      "default": "#2d5016"
+    },
+    {
+      "type": "header",
+      "content": "🔘 Botones"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add_to_cart",
+      "label": "Mostrar botón añadir al carrito",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto botón",
+      "default": "Añadir al carrito"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Color fondo botón",
+      "default": "#8b4513"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Color texto botón",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg",
+      "label": "Color fondo botón hover",
+      "default": "#724113"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius botón (px)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Tamaño fuente botón (px)",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "checkbox",
+      "id": "button_icon",
+      "label": "Mostrar icono en botón",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "✨ Efectos Hover"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hover_overlay",
+      "label": "Mostrar overlay hover",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_view",
+      "label": "Mostrar vista rápida",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "Mostrar wishlist",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "🌱 Beneficios Salud"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_benefits",
+      "label": "Mostrar beneficios salud",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_nutrition",
+      "label": "Mostrar info nutricional",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "🔗 CTA Sección"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_cta",
+      "label": "Mostrar CTA sección",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "section_cta_text",
+      "label": "Texto CTA",
+      "default": "Ver todos los productos"
+    },
+    {
+      "type": "url",
+      "id": "section_cta_url",
+      "label": "URL CTA"
+    },
+    {
+      "type": "checkbox",
+      "id": "section_cta_arrow",
+      "label": "Mostrar flecha CTA",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "section_cta_radius",
+      "label": "Border radius CTA (px)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "section_cta_font_size",
+      "label": "Tamaño fuente CTA (px)",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Tarjeta Producto",
+      "settings": [
+        {
+          "type": "header",
+          "content": "🛍️ Producto"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Colección (opcional)"
+        },
+        {
+          "type": "product",
+          "id": "manual_product",
+          "label": "Producto manual (opcional)"
+        },
+        {
+          "type": "text",
+          "id": "product_handle",
+          "label": "Handle producto (para colección)"
+        },
+        {
+          "type": "text",
+          "id": "manual_title",
+          "label": "Título manual",
+          "info": "Solo si no hay producto seleccionado"
+        },
+        {
+          "type": "text",
+          "id": "manual_price",
+          "label": "Precio manual",
+          "info": "Ej: €12.99",
+          "default": "€12.99"
+        },
+        {
+          "type": "image_picker",
+          "id": "manual_image",
+          "label": "Imagen manual"
+        },
+        {
+          "type": "header",
+          "content": "🏆 Badge"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_badge",
+          "label": "Mostrar badge",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Texto badge",
+          "default": "Más vendido"
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Producto destacado",
+          "default": false,
+          "info": "Añade borde superior dorado"
+        },
+        {
+          "type": "header",
+          "content": "🌱 Beneficios Salud"
+        },
+        {
+          "type": "text",
+          "id": "benefit_1",
+          "label": "Beneficio 1",
+          "default": "Rico en proteínas"
+        },
+        {
+          "type": "text",
+          "id": "benefit_2",
+          "label": "Beneficio 2",
+          "default": "Alto en fibra"
+        },
+        {
+          "type": "text",
+          "id": "benefit_3",
+          "label": "Beneficio 3",
+          "default": "Sin gluten"
+        },
+        {
+          "type": "textarea",
+          "id": "nutrition_info",
+          "label": "Información nutricional",
+          "info": "Se muestra en tooltip hover",
+          "default": "Por 100g: Calorías 578, Proteínas 21g, Fibra 12g, Grasas saludables 49g"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Best Seller",
+      "blocks": [
+        {
+          "type": "product_card",
+          "settings": {
+            "manual_title": "Almendras Premium",
+            "manual_price": "€14.99",
+            "show_badge": true,
+            "badge_text": "Más vendido",
+            "featured": true,
+            "benefit_1": "Rico en vitamina E",
+            "benefit_2": "Alto en proteínas",
+            "benefit_3": "Sin gluten",
+            "nutrition_info": "Por 100g: Calorías 579, Proteínas 21.2g, Fibra 12.5g, Grasas saludables 49.9g"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "manual_title": "Nueces de California",
+            "manual_price": "€16.99",
+            "benefit_1": "Omega-3 natural",
+            "benefit_2": "Antioxidantes",
+            "benefit_3": "Vegano",
+            "nutrition_info": "Por 100g: Calorías 654, Proteínas 15.2g, Fibra 6.7g, Omega-3 9.1g"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "manual_title": "Pistachos Tostados",
+            "manual_price": "€18.99",
+            "benefit_1": "Bajo en calorías",
+            "benefit_2": "Rico en potasio",
+            "benefit_3": "Fibra natural",
+            "nutrition_info": "Por 100g: Calorías 560, Proteínas 20g, Fibra 10g, Potasio 1025mg"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
